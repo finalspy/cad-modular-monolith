@@ -1,0 +1,29 @@
+{
+  "name": "monolithic-app",
+  "version": "1.0.0",
+  "description": "A monolithic application for creating and sharing Reveal.js presentations.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.10.9",
+    "bcrypt": "^5.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "ejs": "^3.1.6",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "presentation",
+    "revealjs"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}

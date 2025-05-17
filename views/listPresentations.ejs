@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Presentations</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>My Presentations</h1>
+        <nav>
+            <a href="/createPresentation">Create New Presentation</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Your Presentations</h2>
+        <ul>
+            <% presentations.forEach(function(presentation) { %>
+                <li>
+                    <a href="/presentations/<%= presentation._id %>">
+                        <%= presentation.title %>
+                    </a>
+                    <% if (presentation.isPublic) { %>
+                        <span>(Public)</span>
+                    <% } else { %>
+                        <span>(Private)</span>
+                    <% } %>
+                </li>
+            <% }); %>
+        </ul>
+        <h2>Public Presentations</h2>
+        <ul>
+            <% publicPresentations.forEach(function(presentation) { %>
+                <li>
+                    <a href="/presentations/<%= presentation._id %>">
+                        <%= presentation.title %>
+                    </a>
+                    <span>(Public)</span>
+                </li>
+            <% }); %>
+        </ul>
+    </main>
+    <footer>
+        <p>&copy; 2023 My Presentation App</p>
+    </footer>
+    <script src="/js/scripts.js"></script>
+</body>
+</html>

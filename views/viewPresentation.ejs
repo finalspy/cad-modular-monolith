@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= presentation.title %></title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="presentation-container">
+        <h1><%= presentation.title %></h1>
+        <div class="presentation-content">
+            <%= presentation.content %>
+        </div>
+        <div class="presentation-footer">
+            <p>Author: <%= presentation.author.username %></p>
+            <p>Status: <%= presentation.isPublic ? 'Public' : 'Private' %></p>
+        </div>
+    </div>
+    <script src="/js/scripts.js"></script>
+</body>
+</html>

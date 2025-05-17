@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monolithic App - Présentations Reveal.js</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Bienvenue sur l'application de présentations Reveal.js</h1>
+        <nav>
+            <ul>
+                <li><a href="/register">S'inscrire</a></li>
+                <li><a href="/login">Se connecter</a></li>
+                <li><a href="/presentations">Voir les présentations</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Créer une nouvelle présentation</h2>
+        <form action="/presentations/create" method="POST">
+            <label for="title">Titre :</label>
+            <input type="text" id="title" name="title" required>
+            <label for="content">Contenu (code des slides) :</label>
+            <textarea id="content" name="content" required></textarea>
+            <label for="isPublic">Rendre public :</label>
+            <input type="checkbox" id="isPublic" name="isPublic">
+            <button type="submit">Créer Présentation</button>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2023 Monolithic App. Tous droits réservés.</p>
+    </footer>
+    <script src="js/scripts.js"></script>
+</body>
+</html>
