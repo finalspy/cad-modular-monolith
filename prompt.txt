@@ -1,0 +1,1 @@
+creer moi une application monolithique en nodejs permettant a des utilisateur de se creer un compte, puis de creer des présentation revealjs en envoyant le code des slides <section/> et de lister les presentation et de les visionner et de visionener celles des autres. Les presentation pourront etre publiques et visionnables par tous ou privees et visinnable que par l'auteur.
