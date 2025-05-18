@@ -12,23 +12,26 @@
         <% if (session && session.user) { %>
             <% if (message) { %>
                 <p><%= message %></p>
-            <% } else { %>
+            <% } %>
             <h2>Your Presentations</h2>
-            <ul>
-                <% presentations.forEach(function(presentation) { %>
-                    <li>
-                        <a href="/presentations/<%= presentation._id %>" target="_blank">
-                            <%= presentation.title %>
-                        </a>
-                        <% if (presentation.isPublic) { %>
-                            <span>(Public)</span>
-                        <% } else { %>
-                            <span>(Private)</span>
-                        <% } %>
-                        <span><%= presentation.username %></span>
-                    </li>
-                <% }); %>
-            </ul>
+            <% const userPresentations = presentations.filter(p => p.authorId.toString() === session.user.id.toString()); %>
+            <% if (userPresentations.length > 0) { %>
+                <ul>
+                    <% userPresentations.forEach(function(presentation) { %>
+                        <li>
+                            <a href="/presentations/<%= presentation._id %>" target="_blank">
+                                <%= presentation.title %>
+                            </a>
+                            <% if (presentation.isPublic) { %>
+                                <span>(Public)</span>
+                            <% } else { %>
+                                <span>(Private)</span>
+                            <% } %>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% } else { %>
+                <p>Vous n'avez aucune présentation.</p>
             <% } %>
            <h2>Others' Public Presentations</h2>
         <% } else { %>
@@ -36,17 +39,19 @@
             <h2>Public Presentations</h2>
         <% } %>
         <ul>
-            <% const filteredPresentations = publicPresentations.filter(presentation => {
-                return presentation.authorId && session.user && session.user._id && 
-                    presentation.authorId.toString() !== session.user._id.toString();
-            }); %>
-            <% if (filteredPresentations.length > 0) { %>
-                <% filteredPresentations.map(presentation => { %>
+            <% 
+            const publicPresentations = session && session.user
+                ? presentations.filter(p => p.isPublic && p.authorId.toString() !== session.user.id.toString()) 
+                : presentations.filter(p => p.isPublic); 
+            %>            
+            <% if (publicPresentations.length > 0) { %>
+                <% publicPresentations.map(presentation => { %>
                 <li>
                     <a href="/presentations/<%= presentation._id %>" target="_blank">
                         <%= presentation.title %>
                     </a>
                     <span>(Public)</span>
+                    <span><%= presentation.username %></span>
                 </li>
                 <% }); %>
             <% } else { %>

@@ -11,7 +11,7 @@ router.get('/create', authMiddleware, (req, res) => {
 // Route to create a new presentation
 router.post('/', authMiddleware, presentationController.createPresentation);
 
-// Route to view a specific presentation
-router.get('/:id', authMiddleware, presentationController.viewPresentation);
+// Route to view a specific presentation / no middleware check id made inside controler 
+router.get('/:id', presentationController.viewPresentation);
 
 module.exports = router;

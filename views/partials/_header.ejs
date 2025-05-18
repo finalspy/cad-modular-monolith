@@ -3,7 +3,7 @@
     <nav>
         <ul class="nav-links">
             <% if (session && session.user) { %>
-                <li><a href="/presentations/create">Add slideshow</a></li>
+                <li class="nav-button"><a href="/presentations/create">Add slideshow</a></li>
                 <li class="nav-button logout"><a href="/auth/logout">Logout</a></li>
             <% } else { %>
                 <% if (currentRoute !== '/auth/register') { %>

@@ -1,5 +1,7 @@
 const express = require('express');
 const session = require('express-session');
+const fileUpload = require('express-fileupload');
+
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
@@ -7,6 +9,7 @@ const presentationRoutes = require('./routes/presentationRoutes');
 const userRoutes = require('./routes/userRoutes');
 const Presentation = require('./models/presentation');
 const presentationService = require('./services/presentationService');
+
 require('dotenv').config();
 
 
@@ -16,6 +19,7 @@ if (!process.env.SESSION_SECRET || !process.env.DATABASE_URL) {
 }
 
 const app = express();
+app.use(fileUpload());
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,6 +32,12 @@ app.use(session({
 app.use((req, res, next) => {
     res.locals.currentRoute = req.path; // Set currentRoute to the current request path
     res.locals.session = req.session; // Make session available in all templates
+    // Log the current user connected
+    if (req.session && req.session.user) {
+        console.log('Current User:', req.session.user);
+    } else {
+        console.log('No user is currently connected.');
+    }
     next();
 });
 
@@ -44,19 +54,17 @@ mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTo
 app.get('/', async (req, res) => {
         try {
         const userId = req.session.user ? req.session.user.id : null;
-        const presentations = userId ? await presentationService.listPresentations(userId) : [];
-        const publicPresentations = await Presentation.find({ isPublic: true });
+        const presentations = await presentationService.listPresentations(userId);
+        console.log('Presentations:', presentations);
 
         res.render('index', {
             presentations,
-            publicPresentations,
             message: null, // Default value for message
         });
     } catch (error) {
         console.error('Error retrieving presentations for home page:', error);
         res.render('index', {
             presentations: [],
-            publicPresentations: [],
             message: 'An error occurred while retrieving presentations.',
         });
     }
