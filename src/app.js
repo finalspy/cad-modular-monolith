@@ -5,7 +5,15 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const presentationRoutes = require('./routes/presentationRoutes');
 const userRoutes = require('./routes/userRoutes');
+const Presentation = require('./models/presentation');
+const presentationService = require('./services/presentationService');
 require('dotenv').config();
+
+
+if (!process.env.SESSION_SECRET || !process.env.DATABASE_URL) {
+    console.error('Missing required environment variables: SESSION_SECRET or DATABASE_URL');
+    process.exit(1);
+}
 
 const app = express();
 
@@ -17,16 +25,42 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
 }));
+app.use((req, res, next) => {
+    res.locals.currentRoute = req.path; // Set currentRoute to the current request path
+    res.locals.session = req.session; // Make session available in all templates
+    next();
+});
 
 // Set view engine
 app.set('view engine', 'ejs');
+app.set('views', './views'); // Ensure the views directory is correctly set
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
+app.get('/', async (req, res) => {
+        try {
+        const userId = req.session.user ? req.session.user.id : null;
+        const presentations = userId ? await presentationService.listPresentations(userId) : [];
+        const publicPresentations = await Presentation.find({ isPublic: true });
+
+        res.render('index', {
+            presentations,
+            publicPresentations,
+            message: null, // Default value for message
+        });
+    } catch (error) {
+        console.error('Error retrieving presentations for home page:', error);
+        res.render('index', {
+            presentations: [],
+            publicPresentations: [],
+            message: 'An error occurred while retrieving presentations.',
+        });
+    }
+});
 app.use('/auth', authRoutes);
 app.use('/presentations', presentationRoutes);
 app.use('/users', userRoutes);

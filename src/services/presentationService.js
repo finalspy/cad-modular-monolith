@@ -2,7 +2,12 @@ const Presentation = require('../models/presentation');
 
 const createPresentation = async (data) => {
     const { title, content, isPublic, authorId } = data;
-    const presentation = new Presentation({ title, content, isPublic, authorId });
+    // Fetch the author's username
+    const author = await User.findById(authorId, 'username');
+    if (!author) {
+        throw new Error('Author not found');
+    }
+    const presentation = new Presentation({ title, content, isPublic, authorId, authorUsername: author.username });
     return await presentation.save();
 };
 

@@ -1,3 +1,14 @@
+/* Ensure the body and html take full height */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    /* Use flexbox for vertical layout */
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,20 +17,102 @@ body {
 }
 
 header {
-    background: #35424a;
+    background: linear-gradient(90deg, #35424a, #1f2a30);
+    padding: 10px 20px;
+    /* Adjust padding for better spacing */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    /* Ensure child elements can be absolutely positioned */
+    display: flex;
+    /* Use flexbox for layout */
+    justify-content: space-between;
+    /* Push title to the left and buttons to the right */
+    align-items: center;
+    /* Vertically center the content */
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8rem;
     color: #ffffff;
-    padding: 10px 0;
+}
+
+header h1 a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 10px;
+}
+
+/* Common button styles */
+.nav-button a {
+    color: #ffffff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+/* Specific button colors */
+.nav-button.login a {
+    background-color: #45a049;
+    /* Green */
+}
+
+.nav-button.login a:hover {
+    background-color: #3a8a3e;
+    /* Darker green on hover */
+}
+
+.nav-button.logout a {
+    background-color: #a04545;
+    /* Red */
+}
+
+.nav-button.logout a:hover {
+    background-color: #8a3a3a;
+    /* Darker red on hover */
+}
+
+.nav-button.register a {
+    background-color: #4568a0;
+    /* Blue */
+}
+
+.nav-button.register a:hover {
+    background-color: #3a5a8a;
+    /* Darker blue on hover */
+}
+
+footer {
+    background: #35424a;
+    padding: 15px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    color: #ffffff;
     text-align: center;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+}
+
+main, .container {
+    flex: 1;
+    /* Allow the container to take up remaining space */
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
 }
 
 h1 {
     margin: 0;
-}
-
-.container {
-    width: 80%;
-    margin: auto;
-    overflow: hidden;
+    text-align: center;
 }
 
 form {

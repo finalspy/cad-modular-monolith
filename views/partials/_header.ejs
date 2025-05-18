@@ -1,0 +1,18 @@
+<header>
+    <h1><a href="/">VibeReveal</a></h1>
+    <nav>
+        <ul class="nav-links">
+            <% if (session && session.user) { %>
+                <li><a href="/presentations/create">Add slideshow</a></li>
+                <li class="nav-button logout"><a href="/auth/logout">Logout</a></li>
+            <% } else { %>
+                <% if (currentRoute !== '/auth/register') { %>
+                    <li class="nav-button register"><a href="/auth/register">Register</a></li>
+                <% } %>
+                <% if (currentRoute !== '/auth/login') { %>
+                    <li class="nav-button login"><a href="/auth/login">Login</a></li>
+                <% } %>
+            <% } %>
+        </ul>
+    </nav>
+</header>
