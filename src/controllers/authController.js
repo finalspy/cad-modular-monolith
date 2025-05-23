@@ -1,6 +1,5 @@
+const authService = require('../services/authService');
 const User = require('../models/user');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 
 // Register a new user
 exports.registerUser = async (req, res) => {
@@ -13,10 +12,7 @@ exports.registerUser = async (req, res) => {
             return res.status(400).render('register', { error: 'Username or email already exists' });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ username, password: hashedPassword, email });
-        await newUser.save();
-        // Redirect to the home page after successful registration
+        await authService.registerUser(username, password, email);
         res.redirect('/');
     } catch (error) {
         console.error('Error during registration:', error);
@@ -29,23 +25,11 @@ exports.loginUser = async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        const user = await User.findOne({ username });
-        if (!user) {
-            return res.status(401).json({ message: 'Invalid credentials' });
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(401).json({ message: 'Invalid credentials' });
-        }
-
-        //const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        //res.status(200).json({ token });
-        // Store user in session
+        const user = await authService.loginUser(username, password);
         req.session.user = { id: user._id, username: user.username };
-        res.redirect('/'); // Redirect to home page after successful login
+        res.redirect('/');
     } catch (error) {
-        res.status(500).json({ message: 'Error logging in', error });
+        res.status(401).json({ message: error.message });
     }
 };
 
@@ -55,6 +39,6 @@ exports.logoutUser = (req, res) => {
             console.error('Error during logout:', err);
             return res.status(500).render('login', { error: 'An error occurred while logging out. Please try again.' });
         }
-        res.redirect('/'); // Redirect to the login page after logout
+        res.redirect('/');
     });
 };

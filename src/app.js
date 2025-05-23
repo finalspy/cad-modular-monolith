@@ -4,10 +4,13 @@ const fileUpload = require('express-fileupload');
 
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+
 const authRoutes = require('./routes/authRoutes');
 const presentationRoutes = require('./routes/presentationRoutes');
 const userRoutes = require('./routes/userRoutes');
+
 const Presentation = require('./models/presentation');
+
 const presentationService = require('./services/presentationService');
 
 require('dotenv').config();
