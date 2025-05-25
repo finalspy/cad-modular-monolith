@@ -24,6 +24,8 @@ const presentationSchema = new mongoose.Schema({
     },
 }, { timestamps: true });
 
-const Presentation = mongoose.model('Presentation', presentationSchema);
+const Presentation = mongoose.models.Presentation
+    ? mongoose.model('Presentation')
+    : mongoose.model('Presentation', presentationSchema);
 
 module.exports = Presentation;

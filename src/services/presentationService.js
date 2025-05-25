@@ -1,10 +1,9 @@
 const Presentation = require('../models/presentation');
-const User = require('../models/user'); // Import the User model
+const User = require('../models/user');
 
 const createPresentation = async (data) => {
     const { title, content, isPublic, authorId } = data;
-    // Fetch the author's username
-    const author = await User.findById(authorId).select('username'); // Ensure 'username' is selected
+    const author = await User.findById(authorId).select('username');
     if (!author) {
         throw new Error('Author not found');
     }
@@ -14,7 +13,6 @@ const createPresentation = async (data) => {
 
 const listPresentations = async (userId) => {
     console.log('User ID:', userId); // Log the userId for debugging
-    
     return await Presentation.find({ 
         $or: [{ isPublic: true }, { authorId: userId }] 
     });

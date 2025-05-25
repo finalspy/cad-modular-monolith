@@ -1,8 +1,7 @@
 const authService = require('../services/authService');
 const User = require('../models/user');
 
-// Register a new user
-exports.registerUser = async (req, res) => {
+exports.register = async (req, res) => {
     const { username, password, email } = req.body;
 
     try {
@@ -20,8 +19,7 @@ exports.registerUser = async (req, res) => {
     }
 };
 
-// Login user
-exports.loginUser = async (req, res) => {
+exports.login = async (req, res) => {
     const { username, password } = req.body;
 
     try {
@@ -33,7 +31,7 @@ exports.loginUser = async (req, res) => {
     }
 };
 
-exports.logoutUser = (req, res) => {
+exports.logout = (req, res) => {
     req.session.destroy((err) => {
         if (err) {
             console.error('Error during logout:', err);
