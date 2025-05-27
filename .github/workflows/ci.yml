@@ -8,18 +8,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
       - uses: pnpm/action-setup@v3
         with:
-          version: 9
-          run_install: true
+          version: 10
 
-      - run: pnpm --version
-      - run: which pnpm
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 23
+          cache: 'pnpm'
 
-      - run: pnpm run lint
+      - run: pnpm install
       - run: pnpm test
-      - run: pnpm run coverage -- --coverage
+      - run: pnpm coverage
