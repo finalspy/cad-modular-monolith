@@ -6,12 +6,10 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const authRoutes = require('./routes/authRoutes');
-const presentationRoutes = require('./routes/presentationRoutes');
+const presentationRoutes = require('./infrastructure/adapters/in/web/presentation-routes');
 const userRoutes = require('./routes/userRoutes');
 
-const Presentation = require('./models/presentation');
-
-const presentationService = require('./services/presentationService');
+const { presentationService } = require('./infrastructure/config/di-config');
 
 require('dotenv').config();
 
@@ -55,14 +53,13 @@ mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTo
 
 // Routes
 app.get('/', async (req, res) => {
-        try {
+    try {
         const userId = req.session.user ? req.session.user.id : null;
         const presentations = await presentationService.listPresentations(userId);
-        console.log('Presentations:', presentations);
-
+        
         res.render('index', {
             presentations,
-            message: null, // Default value for message
+            message: null,
         });
     } catch (error) {
         console.error('Error retrieving presentations for home page:', error);
