@@ -15,8 +15,11 @@ jobs:
 
       - uses: pnpm/action-setup@v3
         with:
-          version: 8
+          version: 9
           run_install: true
+
+      - run: pnpm --version
+      - run: which pnpm
 
       - run: pnpm run lint
       - run: pnpm test
