@@ -1,16 +1,26 @@
-  name: Node.js CI
+name: Node.js CI
 
-  on: [push, pull_request]
+on: [push, pull_request]
 
-  jobs:
-    build-and-test:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v3
-        - uses: actions/setup-node@v3
-          with:
-            node-version: 18
-        - run: npm ci
-        - run: npm run lint
-        - run: npm test
-        - run: npm run coverage -- --coverage
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Installe Node.js v18 et active le cache pnpm
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      # Installe pnpm (v8 ici, tu peux mettre la version de ton choix)
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+          run_install: true # Fait le pnpm install automatiquement
+
+      # Lint, test, coverage avec pnpm
+      - run: pnpm run lint
+      - run: pnpm test
+      - run: pnpm run coverage -- --coverage
