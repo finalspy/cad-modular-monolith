@@ -4,25 +4,27 @@
   "description": "A monolithic application for creating and sharing Reveal.js presentations.",
   "main": "src/app.js",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js",
-    "test": "vitest"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "bcrypt": "^5.0.1",
+    "bcrypt": "^6.0.0",
     "body-parser": "^2.2.0",
-    "dotenv": "^8.2.0",
-    "ejs": "^3.1.6",
-    "express": "^4.17.1",
+    "dotenv": "^16.5.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
     "express-fileupload": "^1.5.1",
     "express-session": "^1.18.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.9"
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.15.1"
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "3.1.4",
     "cypress": "^14.4.0",
     "mongodb-memory-server": "^10.1.4",
-    "nodemon": "^2.0.7",
+    "nodemon": "^3.1.10",
     "supertest": "^7.1.1",
     "vitest": "^3.1.4"
   },
