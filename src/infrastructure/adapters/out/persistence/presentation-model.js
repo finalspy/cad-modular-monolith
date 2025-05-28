@@ -21,11 +21,9 @@ const presentationSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true
-    },
-}, { timestamps: true });
+    }
+}, {
+    timestamps: true
+});
 
-const Presentation = mongoose.models.Presentation
-    ? mongoose.model('Presentation')
-    : mongoose.model('Presentation', presentationSchema);
-
-module.exports = Presentation;
+module.exports = mongoose.model('Presentation', presentationSchema); 

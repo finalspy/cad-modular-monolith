@@ -1,3 +1,4 @@
 data
 *.zip
 coverage
+node_modules
