@@ -5,6 +5,10 @@ on: [push, pull_request]
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
+      SESSION_SECRET: test
+
     steps:
       - uses: actions/checkout@v4
 

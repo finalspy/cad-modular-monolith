@@ -1,6 +1,9 @@
 import request from "supertest";
-import express from "express";
 import app from "../src/app"; // si exporté
+
+vi.mock("mongoose", () => ({
+  connect: vi.fn(), // évite la vraie connexion
+}));
 
 describe("App integration", () => {
   it("GET / should return 200", async () => {

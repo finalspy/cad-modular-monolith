@@ -3,13 +3,10 @@ const session = require('express-session');
 const fileUpload = require('express-fileupload');
 
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 
 const authRoutes = require('./routes/authRoutes');
 const presentationRoutes = require('./routes/presentationRoutes');
 const userRoutes = require('./routes/userRoutes');
-
-const Presentation = require('./models/presentation');
 
 const presentationService = require('./services/presentationService');
 
@@ -47,11 +44,6 @@ app.use((req, res, next) => {
 // Set view engine
 app.set('view engine', 'ejs');
 app.set('views', './views'); // Ensure the views directory is correctly set
-
-// Connect to MongoDB
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
 app.get('/', async (req, res) => {
